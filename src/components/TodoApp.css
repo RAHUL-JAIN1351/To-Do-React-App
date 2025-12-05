@@ -1,0 +1,90 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+.todo{
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px 30px;
+    border-radius: 8px;
+    background-color: bisque;
+}
+h1{
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: Tahoma;
+    font-weight: 600;
+}
+.input-row{
+    display: flex;
+    gap:10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+.input-row input{
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+.btn{
+    padding:8px 20px;
+    color: white;
+}
+.add-btn{
+    background-color: rgb(142, 162, 162);
+    border: none;
+    border-radius: 5px;
+}
+.delete-btn{
+    background-color: tomato;
+    border: none;
+    border-radius: 5px;
+    margin: 0px 5px;
+}
+.edit-btn{
+    background-color: rgb(5, 93, 67);
+    border: none;
+    border-radius: 5px;
+    margin: 0px 5px;
+}
+
+.task-table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.task-table th , .task-table td{
+    border: 1px solid #4f4c4c;
+    text-align: center;
+    padding: 5px;
+}
+.task-table thead{
+    background-color: #ddd; 
+}
+
+.done-task {
+  position: relative;
+  color: gray;
+}
+
+/* line starts at center with zero width */
+.done-task::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 2px;
+  background: gray;
+  transform: translateY(-50%);
+  transition: all 0.4s ease;
+}
+
+/* expand line outward when done */
+.done-task.done-animate::after {
+    left:0;
+    width: 100%;
+}
+
+
