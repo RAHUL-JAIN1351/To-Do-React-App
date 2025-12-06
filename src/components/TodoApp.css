@@ -1,90 +1,98 @@
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  margin: 0;
+  padding: 0;
 }
-.todo{
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 20px 30px;
-    border-radius: 8px;
-    background-color: bisque;
+.todo {
+  max-width: 600px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
-h1{
-    text-align: center;
-    margin-bottom: 20px;
-    font-family: Tahoma;
-    font-weight: 600;
+.todo h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
 }
-.input-row{
-    display: flex;
-    gap:10px;
-    margin-bottom: 20px;
-    justify-content: center;
+.input-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
-.input-row input{
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+.input-row input {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
 }
-.btn{
-    padding:8px 20px;
-    color: white;
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
-.add-btn{
-    background-color: rgb(142, 162, 162);
-    border: none;
-    border-radius: 5px;
+.add-btn {
+  background: #4cafef;
+  color: white;
 }
-.delete-btn{
-    background-color: tomato;
-    border: none;
-    border-radius: 5px;
-    margin: 0px 5px;
+.add-btn:hover {
+  background: #2196f3;
 }
-.edit-btn{
-    background-color: rgb(5, 93, 67);
-    border: none;
-    border-radius: 5px;
-    margin: 0px 5px;
+.edit-btn {
+  background: #ffb74d;
+  color: white;
+  margin-right: 5px;
 }
-
-.task-table{
-    width: 100%;
-    border-collapse: collapse;
+.edit-btn:hover {
+  background: #f57c00;
 }
-.task-table th , .task-table td{
-    border: 1px solid #4f4c4c;
-    text-align: center;
-    padding: 5px;
+.delete-btn {
+  background: #e57373;
+  color: white;
+  margin-left: 5px;
 }
-.task-table thead{
-    background-color: #ddd; 
+.delete-btn:hover {
+  background: #d32f2f;
 }
-
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.task-table th, .task-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+.task-table tr:hover{
+    background: #f4f6f9;
+    cursor: pointer;
+}
+.task-table tr:nth-child(even) {
+  background: #fafafa;
+}
 .done-task {
-  position: relative;
-  color: gray;
+  text-decoration: line-through;
+  color: #888;
+  transition: all 0.3s ease;
 }
-
-/* line starts at center with zero width */
-.done-task::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 0;
-  height: 2px;
-  background: gray;
-  transform: translateY(-50%);
-  transition: all 0.4s ease;
+.done-animate {
+  animation: fadeIn 0.5s ease;
 }
-
-/* expand line outward when done */
-.done-task.done-animate::after {
-    left:0;
-    width: 100%;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-
+.empty-task {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}
+input[type="checkbox"]{
+    cursor: pointer;
+}
