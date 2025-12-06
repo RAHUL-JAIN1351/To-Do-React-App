@@ -7,15 +7,18 @@ const TodoApp = () => {
   const [editedTaskId, setEditedId] = useState(null);
 
   useEffect(() => {
-    const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    setTask(savedTasks);
+    const savedTasks = localStorage.getItem("tasks");
+    if(savedTasks.length > 0){
+        setTask(JSON.parse(savedTasks));
+    }
+    else{
+        setTask([]);
+    }
   }, []);
 
-  useEffect(() => {
-    if(tasks.length > 0){
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
-  }, [tasks]);
+//   useEffect(() => {
+//     localStorage.setItem("tasks", JSON.stringify(tasks));
+//   }, [tasks]);
 
   const handleAddTask = useCallback(() => {
     const text = taskInput.trim();
@@ -40,10 +43,16 @@ const TodoApp = () => {
   }, [taskInput, editedTaskId]);
 
   const handleDelete = (id) => {
-    setTask(tasks.filter(task => task.id !== id));
+    setTask((prevTasks) => {
+        const updatedTasks = prevTasks.filter(task => task.id !== id);
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+        return updatedTasks;
+    });
     setEditedId(null);
     setTaskInput("");
   };
+
+
 
   const handleEdit = (id) => {
     const taskToEdit = tasks.find(task => task.id === id);
