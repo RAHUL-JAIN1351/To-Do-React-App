@@ -1,24 +1,23 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import './TodoApp.css'
+import React, { useCallback, useEffect, useState } from 'react';
+import './TodoApp.css';
 
 const TodoApp = () => {
   const [taskInput, setTaskInput] = useState("");
-  const [tasks, setTask] = useState([]);
+
+  const [tasks, setTask] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("tasks");
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
   const [editedTaskId, setEditedId] = useState(null);
 
   useEffect(() => {
-    const savedTasks = localStorage.getItem("tasks");
-    if(savedTasks.length > 0){
-        setTask(JSON.parse(savedTasks));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
     }
-    else{
-        setTask([]);
-    }
-  }, []);
-
-//   useEffect(() => {
-//     localStorage.setItem("tasks", JSON.stringify(tasks));
-//   }, [tasks]);
+  }, [tasks]);
 
   const handleAddTask = useCallback(() => {
     const text = taskInput.trim();
@@ -42,23 +41,21 @@ const TodoApp = () => {
     setTaskInput("");
   }, [taskInput, editedTaskId]);
 
+
   const handleDelete = (id) => {
-    setTask((prevTasks) => {
-        const updatedTasks = prevTasks.filter(task => task.id !== id);
-        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-        return updatedTasks;
-    });
+    setTask(prevTasks => prevTasks.filter(task => task.id !== id));
     setEditedId(null);
     setTaskInput("");
   };
 
-
-
   const handleEdit = (id) => {
     const taskToEdit = tasks.find(task => task.id === id);
-    setTaskInput(taskToEdit.name);
-    setEditedId(id);
+    if (taskToEdit) {
+      setTaskInput(taskToEdit.name);
+      setEditedId(id);
+    }
   };
+
 
   const toggleDone = (id) => {
     setTask(prev =>
@@ -79,7 +76,10 @@ const TodoApp = () => {
           onKeyDown={(e) => { if (e.key === "Enter") handleAddTask() }}
           onChange={(e) => setTaskInput(e.target.value)}
         />
-        <button className={`btn ${editedTaskId ? "edit-btn" : "add-btn"}`} onClick={handleAddTask}>
+        <button
+          className={`btn ${editedTaskId ? "edit-btn" : "add-btn"}`}
+          onClick={handleAddTask}
+        >
           {editedTaskId ? "Edit Task" : "Add Task"}
         </button>
       </div>
@@ -100,7 +100,7 @@ const TodoApp = () => {
             {tasks.map((task, index) => (
               <tr key={task.id}>
                 <td>{index + 1}</td>
-                <td className={`${task.done ? "done-task done-animate" : ""}`}>
+                <td className={task.done ? "done-task done-animate" : ""}>
                   {task.name}
                 </td>
                 <td>
@@ -120,7 +120,7 @@ const TodoApp = () => {
         </table>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default TodoApp;
